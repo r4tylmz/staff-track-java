@@ -37,10 +37,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 System.out.println(e.getMessage());
             }
         }
-        if(username != null && token != null && SecurityContextHolder.getContext().getAuthentication() == null){
+        if(token != null && username != null  && SecurityContextHolder.getContext().getAuthentication() == null){
             if(tokenManager.tokenValidate(token)){
                 UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+                        new UsernamePasswordAuthenticationToken(username,null, new ArrayList<>());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }

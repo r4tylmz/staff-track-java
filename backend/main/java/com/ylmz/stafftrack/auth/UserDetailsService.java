@@ -22,8 +22,10 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.ylmz.stafftrack.entity.User user = service.getUserByEmail(username);
-        if(user != null){
-            return new User(username, bCryptPasswordEncoder.encode(user.getPassword()), new ArrayList<>());
+        com.ylmz.stafftrack.entity.User jwtUser = service.checkUserEmailAndPass(user.getEmail(),user.getPassword());
+        if(jwtUser != null){
+            System.out.println(jwtUser);
+            return new User(jwtUser.getEmail(), bCryptPasswordEncoder.encode(jwtUser.getPassword()), new ArrayList<>());
         }
         throw new UsernameNotFoundException(username);
     }
