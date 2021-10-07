@@ -7,7 +7,7 @@
         <v-btn text to="/admins"> Yöneticiler</v-btn>
         <v-btn text to="/config"> Ayarlar</v-btn>
         <v-spacer></v-spacer>
-        <v-toolbar-title class="mr-3" v-if="isAuthenticated">{{ getAdminCredentials.name +' '+ getAdminCredentials.lastName }}</v-toolbar-title>
+        <v-toolbar-title class="mr-3" v-if="isAuthenticated">{{ getAdminCredentials.name + " " + getAdminCredentials.lastName }}</v-toolbar-title>
         <v-btn v-if="isAuthenticated" text @click="logout"> Çıkış</v-btn>
       </v-app-bar>
     </div>

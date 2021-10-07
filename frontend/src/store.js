@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import router from "@/router";
+import Swal from "sweetalert2";
 
 Vue.use(Vuex);
 
@@ -25,13 +26,12 @@ export const store = new Vuex.Store({
     },
     mutations: {
         setAdminCredentials(state, data) {
-            const admin = {
+            state.admin = {
                 id: data.id,
                 name: data.name,
                 lastName: data.lastName,
                 email: data.email
-            }
-            state.admin = admin;
+            };
         },
         setToken(state, token) {
             state.token = token;
@@ -41,36 +41,42 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
-        initialize({commit, dispatch}) {
-            let token = localStorage.getItem("token");
+        initialize({commit}) {
+            const token = localStorage.getItem("token");
             if (token) {
                 commit("setToken", token);
-                dispatch("setAdminCredentials");
                 router.push("/users");
 
             } else {
-                router.push("/login");
                 return false;
             }
         },
-        login({commit}, authData) {
-            axios
-                .post(`https://localhost:5001/api/User/login`, {
-                    ...authData
-                })
-                .then((response) => {
-                    if (response.status === 200) {
-                        commit("setToken", response.data.id);
-                        localStorage.setItem("token", response.data.id);
-                        router.push("/users");
+        async login({commit, dispatch}, authData) {
+            try {
+                const response = await axios.post("login", {...authData});
+                Swal.fire({
+                        title:'Başarılı',
+                        text:'Giriş işlemi başarılı.',
+                        icon:'success',
+                        timer: 1500,
                     }
+                ).then(()=>{
+                    dispatch("setAdminCredentials", response.data);
+                    commit("setToken", response.data.token);
+                    localStorage.setItem("token", response.data.token);
+                    router.push("/users");
                 });
+
+            }catch (e) {
+                Swal.fire(
+                    'Başarısız',
+                    'Hatalı giriş yaptınız.',
+                    'error'
+                )
+            }
         },
-        setAdminCredentials({state, commit}) {
-            axios.get(`https://localhost:5001/api/User/${state.token}`)
-                .then(response => {
-                    commit("setAdminCredentials", response.data);
-                });
+        setAdminCredentials({commit},data) {
+            commit("setAdminCredentials", data);
         },
         logout({commit}) {
             commit("clearToken");
