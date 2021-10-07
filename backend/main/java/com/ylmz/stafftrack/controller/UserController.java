@@ -30,8 +30,24 @@ public class UserController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDto> getById(@PathVariable int id){
+        return ResponseEntity.ok(modelMapper.map(service.getById(id),UserDto.class));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable int id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/users")
     public ResponseEntity<UserDto> save(@RequestBody User user){
         return ResponseEntity.ok(modelMapper.map(service.save(user),UserDto.class));
+    }
+
+    @PutMapping("/users")
+    public ResponseEntity<UserDto> update(@RequestBody User user){
+        return ResponseEntity.ok(modelMapper.map(service.update(user),UserDto.class));
     }
 }
