@@ -61,4 +61,9 @@ public class UserServiceImpl implements BaseService<User>, IUserService {
     public User getUserByEmail(String email) {
         return repository.getUserByEmail(email);
     }
+
+    @Override
+    public User checkUserEmailAndPass(String email, String password) {
+        return repository.checkUserEmailAndPass(email,password);
+    }
 }

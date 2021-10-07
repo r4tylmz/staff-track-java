@@ -31,6 +31,8 @@ public class StaffServiceImpl implements BaseService<Staff> {
 
     @Override
     public Staff update(Staff entity) {
+        Staff staff = repository.getById(entity.getId());
+        entity.setActivities(staff.getActivities());
         return repository.update(entity);
     }
 
