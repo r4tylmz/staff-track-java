@@ -11,7 +11,7 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                    v-model="user.email"
+                    v-model="user.username"
                     name="email"
                     label="Eposta"
                     type="text"
@@ -44,14 +44,14 @@ export default {
   data() {
     return {
       user: {
-        email: "",
+        username: "",
         password: "",
       },
     };
   },
   methods: {
     Login() {
-      store.dispatch("login", { Email: this.user.email, Password: this.user.password });
+      store.dispatch("login", { username: this.user.username, password: this.user.password });
     },
   },
 };

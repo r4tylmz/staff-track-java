@@ -152,7 +152,7 @@ export default {
     },
     getSalary() {
       axios
-          .get(`https://localhost:5001/api/work/wage/${this.$route.params.id}`)
+          .get(`staffs/wage/${this.$route.params.id}`)
           .then((response) => {
             this.wage = response.data
           });
@@ -161,36 +161,30 @@ export default {
   },
   created() {
     axios
-        .get(`https://localhost:5001/api/Staff/${this.$route.params.id}`)
+        .get(`staffs/${this.$route.params.id}`)
         .then((response) => {
           this.staff = Object.assign({}, response.data);
         });
 
     axios
-        .get(`https://localhost:5001/api/security/${this.$route.params.id}`)
+        .get(`staffactivities/security/${this.$route.params.id}`)
         .then((response) => this.securityActivities.push(...response.data))
 
     axios
-        .get("https://localhost:5001/api/constant/")
+        .get("constants")
         .then((response) => this.config = Object.assign({}, response.data))
 
     axios
-        .get(`https://localhost:5001/api/StaffActivity/${this.$route.params.id}`)
+        .get(`staffactivities/${this.$route.params.id}`)
         .then((response) => this.staffActivities.push(...response.data));
   },
   mounted() {
-    // Themes begin
     am4core.useTheme(am4themes_animated);
-    // Themes end
-
-    // Create chart instance
-    var chart = am4core.create("chartdiv", am4charts.PieChart3D);
-
-// Let's cut a hole in our Pie chart the size of 40% the radius
+    const chart = am4core.create("chartdiv", am4charts.PieChart3D);
     chart.innerRadius = am4core.percent(40);
     axios
         .get(
-            `https://localhost:5001/api/work/${this.$route.params.id}`
+            `staffactivities/totaltime/${this.$route.params.id}`
         )
         .then((response) => {
           chart.data = [

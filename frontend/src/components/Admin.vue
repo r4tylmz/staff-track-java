@@ -133,6 +133,7 @@
 
 <script>
 import axios from "axios";
+import {store} from "@/store";
 
 export default {
   data() {
@@ -167,7 +168,7 @@ export default {
   },
   created() {
     axios
-        .get("https://localhost:5001/api/User")
+        .get("users")
         .then((response) => this.admins.push(...response.data));
   },
   computed: {
@@ -200,7 +201,7 @@ export default {
 
     deleteItemConfirm() {
       axios
-          .delete("https://localhost:5001/api/User/id", {
+          .delete("users/id", {
             params: {id: this.editedItem.id},
           })
           .then((response) => console.log(response));
@@ -227,19 +228,24 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-            .put("https://localhost:5001/api/User", {
+            .put("users", {
               id: this.editedItem.id,
               name: this.editedItem.name,
               lastName: this.editedItem.lastName,
               email: this.editedItem.email,
               password: this.editedItem.password,
             })
-            .then((response) => console.log(response));
+            .then((response) => store.dispatch("setAdminCredentials",{
+              id: response.data.id,
+              name: response.data.name,
+              lastName: response.data.lastName,
+              email: response.data.email,
+            }));
 
         Object.assign(this.admins[this.editedIndex], this.editedItem);
       } else {
         axios
-            .post("https://localhost:5001/api/User", {
+            .post("users", {
               name: this.editedItem.name,
               lastName: this.editedItem.lastName,
             })

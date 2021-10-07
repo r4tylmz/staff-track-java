@@ -204,11 +204,11 @@ export default {
   },
   created() {
     axios
-      .get("https://localhost:5001/api/Staff")
+      .get("staffs")
       .then((response) => this.staffs.push(...response.data));
 
     axios
-      .get("https://localhost:5001/api/StaffActivity")
+      .get("staffactivities")
       .then((response) => this.staffActivities.push(...response.data));
   },
   computed: {
@@ -241,7 +241,7 @@ export default {
 
     deleteItemConfirm() {
       axios
-        .delete("https://localhost:5001/api/Staff/id", {
+        .delete("staffs/id", {
           params: { id: this.editedItem.id },
         })
         .then((response) => console.log(response));
@@ -274,8 +274,7 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        axios
-          .put("https://localhost:5001/api/Staff", {
+        axios.put("staffs", {
             id: this.editedItem.id,
             name: this.editedItem.name,
             lastName: this.editedItem.lastName,
@@ -285,8 +284,7 @@ export default {
 
         Object.assign(this.staffs[this.editedIndex], this.editedItem);
       } else {
-        axios
-          .post("https://localhost:5001/api/Staff", {
+        axios.post("staffs", {
             name: this.editedItem.name,
             lastName: this.editedItem.lastName,
             phoneNumber: this.editedItem.phoneNumber,

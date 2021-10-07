@@ -108,7 +108,7 @@
 <script>
 
 import axios from "axios";
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -124,7 +124,7 @@ export default {
   },
   created() {
     axios
-        .get("https://localhost:5001/api/constant")
+        .get("constants")
         .then((response) => {
           this.timeStart = response.data.workingHourStart
           this.timeEnd = response.data.workingHourEnd
@@ -135,14 +135,14 @@ export default {
   methods: {
     send() {
       axios
-        .put("https://localhost:5001/api/constant",{
+        .put("constants",{
           id: 1,
           workingHourStart: this.timeStart,
           workingHourEnd: this.timeEnd,
           hourlyWage:  this.wagePerHour,
           workingHourPerWeek: this.totalWorkingTime
         }).then(()=>{
-        swal("Başarılı", "Başarıyla kaydedildi!", "success");
+          Swal.fire("Başarılı", "Başarıyla kaydedildi!", "success");
       })
     }
   }
