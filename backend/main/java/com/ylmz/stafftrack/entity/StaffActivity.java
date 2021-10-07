@@ -3,7 +3,6 @@ package com.ylmz.stafftrack.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,4 +20,7 @@ public class StaffActivity {
     private int roomId;
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
+
+    @Column(name = "staff_id")
+    private int staffId;
 }
