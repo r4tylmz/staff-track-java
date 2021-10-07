@@ -20,8 +20,8 @@ public class ConstantController {
     }
 
     @GetMapping("/constants")
-    public ResponseEntity<List<Constant>> getConstants(){
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<Constant> getConstants(){
+        return ResponseEntity.ok(service.getAll().get(0));
     }
     @PostMapping("/constants")
     public ResponseEntity<Constant> save(@RequestBody Constant constant){
