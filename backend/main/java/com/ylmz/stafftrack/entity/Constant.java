@@ -13,5 +13,5 @@ public class Constant {
     private String workingHourStart;
     private String workingHourEnd;
     private int WorkingHourPerWeek;
-    private int WageByHour;
+    private int hourlyWage;
 }
