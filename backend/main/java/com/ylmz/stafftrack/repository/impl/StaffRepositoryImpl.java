@@ -40,7 +40,7 @@ public class StaffRepositoryImpl implements BaseRepository<Staff> {
 
     @Override
     public Staff save(Staff entity) {
-        return staffRepository.saveAndFlush(entity);
+        return staffRepository.save(entity);
     }
 
     @Override

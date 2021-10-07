@@ -1,5 +1,6 @@
 package com.ylmz.stafftrack.repository.impl;
 
+import com.ylmz.stafftrack.dto.StaffActivityDto;
 import com.ylmz.stafftrack.entity.StaffActivity;
 import com.ylmz.stafftrack.repository.BaseRepository;
 import org.springframework.context.annotation.Lazy;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class StaffActivityRepositoryImpl implements BaseRepository<StaffActivity> {
+public class StaffActivityRepositoryImpl implements IStaffActivityRepository {
 
     private final StaffActivityRepository repository;
 
@@ -44,5 +45,20 @@ public class StaffActivityRepositoryImpl implements BaseRepository<StaffActivity
     @Override
     public List<StaffActivity> saveAll(List<StaffActivity> entities) {
         return repository.saveAllAndFlush(entities);
+    }
+
+    @Override
+    public List<StaffActivityDto> getActivitiesByNameLastName() {
+        return repository.getStaffActivitiesByNameLastName();
+    }
+
+    @Override
+    public List<StaffActivityDto> getActivitiesByNameLastNameAndId(int id) {
+        return repository.getStaffActivitiesByNameLastNameAndId(id);
+    }
+
+    @Override
+    public Integer getTotalTimeById(int id) {
+        return repository.getTotalTimeById(id);
     }
 }

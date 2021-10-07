@@ -1,6 +1,7 @@
 package com.ylmz.stafftrack.repository.impl;
 
 import com.ylmz.stafftrack.entity.User;
+import com.ylmz.stafftrack.utils.Crypto;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -41,7 +42,8 @@ public class UserRepositoryImpl implements IUserRepository {
 
     @Override
     public User save(User entity) {
-        return repository.saveAndFlush(entity);
+        entity.setPassword(Crypto.getSha1(entity.getPassword()));
+        return repository.save(entity);
     }
 
     @Override
@@ -53,4 +55,11 @@ public class UserRepositoryImpl implements IUserRepository {
     public User getUserByEmail(String email) {
         return repository.getUserByEmail(email);
     }
+
+    @Override
+    public User checkUserEmailAndPass(String email, String password) {
+        return repository.checkUserEmailAndPass(email, password);
+    }
+
+
 }
